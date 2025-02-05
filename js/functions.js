@@ -1,6 +1,6 @@
 // Функция для проверки длины строки.
 
-const validateStringLength = (validatingString, maxLength) => validatingString.length >= maxLength;
+const validateStringLength = (validatedString, maxLength) => validatedString.length >= maxLength;
 
 // Функция для проверки, является ли строка палиндромом.
 
