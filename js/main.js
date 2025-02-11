@@ -1,3 +1,3 @@
-import {createPhotoDescriptions} from './mock-data.js';
+import {renderPictures} from './render-pictures.js';
 
-createPhotoDescriptions();
+renderPictures();
