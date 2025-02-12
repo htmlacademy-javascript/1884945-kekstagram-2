@@ -83,4 +83,6 @@ const createPhotoDescription = () => {
 const createPhotoDescriptions = () =>
   Array.from({ length: NUMBER_OF_PHOTO_DESCRIPTIONS }, createPhotoDescription);
 
-export { createPhotoDescriptions };
+const photoDescriptions = createPhotoDescriptions();
+
+export { photoDescriptions };
