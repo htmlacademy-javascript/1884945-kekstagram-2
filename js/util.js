@@ -14,4 +14,11 @@ const makeCounter = (counterInitialValue = 1) => {
 const getRandomArrayElement = (elements) =>
   elements[getRandomInteger(0, elements.length - 1)];
 
-export { getRandomInteger, makeCounter, getRandomArrayElement};
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+export {
+  getRandomInteger,
+  makeCounter,
+  getRandomArrayElement,
+  isEscapeKey
+};

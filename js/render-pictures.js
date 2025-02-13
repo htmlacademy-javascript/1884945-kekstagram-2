@@ -4,12 +4,13 @@ const renderPictures = (photoDescriptions) => {
   const pictureTemplate = pictureTemplateFragment.querySelector('.picture');
   const picturesFragment = document.createDocumentFragment();
 
-  photoDescriptions.forEach(({url, description, comments, likes}) => {
+  photoDescriptions.forEach(({id, url, description, comments, likes}) => {
     const picture = pictureTemplate.cloneNode(true);
     const pictureImg = picture.querySelector('.picture__img');
     const pictureComments = picture.querySelector('.picture__comments');
     const pictureLikes = picture.querySelector('.picture__likes');
 
+    picture.id = id;
     pictureImg.src = url;
     pictureImg.alt = description;
     pictureComments.textContent = comments.length;
