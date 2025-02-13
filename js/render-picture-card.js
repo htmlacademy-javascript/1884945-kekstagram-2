@@ -21,14 +21,11 @@ const createCommentElements = ({comments}) => Array.from((comments), ({avatar, n
   </li>`
 );
 
-let renderPortionOfComments;//Объявил отдельно, чтобы можно было экспортировать и удалять eventListener
-// при закрытии полноразмерной картинки при нажатии на крестик или кнопку Esc.
-// let вместо const чтобы eslint не выдавал ошибку: 'const' declarations must be initialized.
-const renderComments = (commentElements) => {
+const createCommentsRenderer = (commentElements) => {
   let currentCount = 0;
   commentsLoader.classList.remove('hidden');
 
-  renderPortionOfComments = () => {
+  return () => {
     commentElements
       .slice(currentCount, currentCount + SHOWN_COMMENTS_VALUE)
       .forEach((commentElement) => {
@@ -41,10 +38,11 @@ const renderComments = (commentElements) => {
       commentsLoader.classList.add('hidden');
     }
   };
-
-  renderPortionOfComments(currentCount, commentElements);
 };
 
+let renderPortionOfComments;//Объявил отдельно, чтобы можно было экспортировать и удалять eventListener
+// при закрытии полноразмерной картинки при нажатии на крестик или кнопку Esc.
+// let вместо const чтобы eslint не выдавал ошибку: 'const' declarations must be initialized.
 const renderPictureCard = (evt) => {
   const currentPicture = photoDescriptions.find((picture) => picture.id === Number(evt.target.closest('.picture').id));
 
@@ -54,7 +52,8 @@ const renderPictureCard = (evt) => {
   totalCommentCount.textContent = currentPicture.comments.length;
 
   socialComments.replaceChildren();
-  renderComments(createCommentElements(currentPicture));
+  renderPortionOfComments = createCommentsRenderer(createCommentElements(currentPicture));
+  renderPortionOfComments();
 };
 
 export {renderPictureCard, commentsLoader, renderPortionOfComments};
