@@ -27,6 +27,10 @@ const onEscKeyDown = (evt) => {
   }
 };
 
+const onCommentsLoaderClick = () => {
+  renderPortionOfComments();
+};
+
 // function declaration для поднятия и возможности использования в функциях выше.
 function openPictureCard() {
   pictureCard.classList.remove('hidden');
@@ -34,6 +38,7 @@ function openPictureCard() {
 
   document.addEventListener('keydown', onEscKeyDown);
   pictureCardCloseButton.addEventListener('click', onpictureCardCloseButtonClick);
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
   pictures.removeEventListener('click', onPictureClick);
 }
 
@@ -44,7 +49,7 @@ function closePictureCard() {
   pictures.addEventListener('click', onPictureClick);
   document.removeEventListener('keydown', onEscKeyDown);
   pictureCardCloseButton.removeEventListener('click', onpictureCardCloseButtonClick);
-  commentsLoader.removeEventListener('click', renderPortionOfComments);
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
 }
 
 renderPictures(photoDescriptions);

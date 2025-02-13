@@ -39,12 +39,10 @@ const renderComments = (commentElements) => {
 
     if (currentCount >= commentElements.length) {
       commentsLoader.classList.add('hidden');
-      commentsLoader.removeEventListener('click', renderPortionOfComments);
     }
   };
 
   renderPortionOfComments(currentCount, commentElements);
-  commentsLoader.addEventListener('click', renderPortionOfComments);
 };
 
 const renderPictureCard = (evt) => {
