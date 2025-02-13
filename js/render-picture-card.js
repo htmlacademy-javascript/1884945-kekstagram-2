@@ -1,5 +1,5 @@
 import {photoDescriptions} from './mock-data.js';
-const SHOWN_COMMENTS_VALUE = 5;
+const COMMENTS_TO_SHOW_VALUE = 5;
 
 const pictureCard = document.querySelector('.big-picture');
 const pictureCardImg = pictureCard.querySelector('img');
@@ -22,19 +22,19 @@ const createCommentElements = ({comments}) => Array.from((comments), ({avatar, n
 );
 
 const createCommentsRenderer = (commentElements) => {
-  let currentCount = 0;
+  let renderedCommentsCounter = 0;
   commentsLoader.classList.remove('hidden');
 
   return () => {
     commentElements
-      .slice(currentCount, currentCount + SHOWN_COMMENTS_VALUE)
+      .slice(renderedCommentsCounter, renderedCommentsCounter + COMMENTS_TO_SHOW_VALUE)
       .forEach((commentElement) => {
         socialComments.insertAdjacentHTML('beforeend', commentElement);
-        currentCount++;
+        renderedCommentsCounter++;
       });
-    shownCommentCount.textContent = currentCount;
+    shownCommentCount.textContent = renderedCommentsCounter;
 
-    if (currentCount >= commentElements.length) {
+    if (renderedCommentsCounter >= commentElements.length) {
       commentsLoader.classList.add('hidden');
     }
   };
