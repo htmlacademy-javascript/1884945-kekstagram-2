@@ -39,7 +39,7 @@ const renderComments = (commentElements) => {
 
     if (currentCount >= commentElements.length) {
       commentsLoader.classList.add('hidden');
-      commentsLoader.addEventListener('click', renderPortionOfComments);
+      commentsLoader.removeEventListener('click', renderPortionOfComments);
     }
   };
 
