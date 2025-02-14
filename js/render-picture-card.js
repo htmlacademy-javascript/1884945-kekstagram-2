@@ -51,6 +51,7 @@ const createCommentElements = ({comments}) => Array.from((comments), ({avatar, n
 );
 
 // function declaration для поднятия и возможности использования в функциях выше.
+
 function renderPortionOfComments () {
   commentsLoader.classList.remove('hidden');
   commentElements
