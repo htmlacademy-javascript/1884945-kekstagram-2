@@ -1,3 +1,3 @@
-import {renderPictures} from './render-pictures.js';
+import {initPicturesGallery} from './pictures-gallery.js';
 
-renderPictures();
+initPicturesGallery();
