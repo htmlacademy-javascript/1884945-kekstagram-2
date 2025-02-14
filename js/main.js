@@ -1,1 +1,3 @@
-import './pictures-gallery.js';
+import {initPicturesGallery} from './pictures-gallery.js';
+
+initPicturesGallery();

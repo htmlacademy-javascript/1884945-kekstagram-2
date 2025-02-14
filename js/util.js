@@ -1,3 +1,5 @@
+const ESC_KEY = 'Escape';
+
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
@@ -14,7 +16,7 @@ const makeCounter = (counterInitialValue = 1) => {
 const getRandomArrayElement = (elements) =>
   elements[getRandomInteger(0, elements.length - 1)];
 
-const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = (evt) => evt.key === ESC_KEY;
 
 export {
   getRandomInteger,
