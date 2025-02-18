@@ -31,6 +31,7 @@ const onPictureCardCloseButtonClick = () => {
 
 const onEscKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
+    evt.preventDefault();
     closePictureCard();
   }
 };
