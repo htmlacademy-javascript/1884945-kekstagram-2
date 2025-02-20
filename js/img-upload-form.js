@@ -1,5 +1,6 @@
-import {isEscapeKey} from './util.js';
+import { isEscapeKey } from './util.js';
 import { addPristine, destroyPristine } from './validation.js';
+import { addScale, resetScale } from './img-scale.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
@@ -58,6 +59,7 @@ function openUploadForm() {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
   addPristine();
+  addScale();
 
   imgUploadCancel.addEventListener('click', onImgUploadCancelClick);
   document.addEventListener('keydown', onEscKeyDown);
@@ -72,6 +74,7 @@ function closeUploadForm() {
   descriptionInput.value = '';
   hashTagsInput.value = '';
   destroyPristine();
+  resetScale();
 
   imgUploadPreview.removeEventListener('load', onImgUploadPreviewLoad);
   imgUploadCancel.removeEventListener('click', onImgUploadCancelClick);
@@ -80,4 +83,4 @@ function closeUploadForm() {
   hashTagsInput.removeEventListener('keydown', onInputInFocusKeyDown);
 }
 
-export {onImgUploadInputChange};
+export { onImgUploadInputChange };
