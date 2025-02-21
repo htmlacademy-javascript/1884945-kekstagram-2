@@ -83,11 +83,11 @@ const onEffectsListChange = (evt) => {
 const addImgEffects = () => {
   noUiSlider.create(effectLevelSlider, {
     range: {
-      min: currentEffect.min,
-      max: currentEffect.max,
+      min: defaultEffect.min,
+      max: defaultEffect.max,
     },
-    start: currentEffect.max,
-    step: currentEffect.step,
+    start: defaultEffect.max,
+    step: defaultEffect.step,
     connect: 'lower',
     format: {
       to: (value) => {
@@ -106,6 +106,7 @@ const addImgEffects = () => {
 };
 
 const removeImgEffects = () => {
+  currentEffect = defaultEffect;
   effectsList.removeEventListener('change', onEffectsListChange);
   effectLevelSlider.noUiSlider.destroy();
 };
