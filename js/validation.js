@@ -55,6 +55,7 @@ const onimgUploadFormSubmit = (evt) => {
 const addPristine = () => {
   pristine = new Pristine(imgUploadForm, {
     classTo: 'img-upload__field-wrapper',
+    errorClass: 'img-upload__field-wrapper--error',
     errorTextParent: 'img-upload__field-wrapper',
   });
 
