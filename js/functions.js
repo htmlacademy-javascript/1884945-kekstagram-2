@@ -22,24 +22,17 @@ const getNumbers = (originalString) => parseInt((originalString.toString().repla
 
 // Функция, которая принимает время начала и конца рабочего дня, а также время старта и продолжительность
 // встречи в минутах и возвращает true, если встреча не выходит за рамки рабочего дня, и false, если выходит.
+
 const isEnoughTime = (beginTimeString, finishTimeString, startTimeString, duration) => {
-  const beginTime = beginTimeString.split(':');
-  const finishTime = finishTimeString.split(':');
-  const startTime = startTimeString.split(':');
-
-  if ((+startTime[0] < +beginTime[0]) || (+startTime[0] === +beginTime[0] && +startTime[1] < +beginTime[1])) {
-    return false;
-  }
-
-  if (((+finishTime[0] * 60 + (+finishTime[1])) - (+startTime[0] * 60 + (+startTime[1]))) >= duration) {
-    return true;
-  }
-
-  return false;
+  const timeToMinutes = ([hours, minutes]) => Number(hours) * 60 + Number(minutes);
+  const beginTime = timeToMinutes(beginTimeString.split(':'));
+  const finishTime = timeToMinutes(finishTimeString.split(':'));
+  const beginDate = timeToMinutes(startTimeString.split(':'));
+  return beginDate >= beginTime && (beginDate + duration) <= finishTime;
 };
 
 // Вызов функций, для обхода ошибки eslint ('функция' is assigned a value but never used).
 validateStringLength('просто', 10);
 isPalindrome('Топот');
 getNumbers(-1.5);
-isEnoughTime('8:00', '17:30', '08:00', 900);
+isEnoughTime('08:00', '14:30', '14:00', 90);
