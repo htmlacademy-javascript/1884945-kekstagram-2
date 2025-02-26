@@ -1,3 +1,4 @@
+import {getData} from './api.js';
 import {initPicturesGallery} from './pictures-gallery.js';
 
-initPicturesGallery();
+getData().then((result) => initPicturesGallery(result));

@@ -1,4 +1,3 @@
-import {photoDescriptions} from './mock-data.js';
 import {isEscapeKey} from './util.js';
 
 const COMMENTS_TO_SHOW_VALUE = 5;
@@ -17,10 +16,10 @@ const commentsLoader = pictureCard.querySelector('.social__comments-loader');
 
 const isPicture = (evt) => evt.target.closest('.picture');
 
-const onPictureClick = (evt) => {
+const onPictureClick = (photoDescriptions, evt) => {
   if (isPicture(evt)) {
     evt.preventDefault();
-    renderPictureCard(evt);
+    renderPictureCard(evt, photoDescriptions);
     openPictureCard();
   }
 };
@@ -67,7 +66,7 @@ function renderPortionOfComments () {
   }
 }
 
-function renderPictureCard (evt) {
+function renderPictureCard (evt, photoDescriptions) {
   const currentPicture = photoDescriptions.find((picture) => picture.id === Number(evt.target.closest('.picture').id));
 
   pictureCardImg.src = currentPicture.url;
