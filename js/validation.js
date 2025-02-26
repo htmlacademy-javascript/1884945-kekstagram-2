@@ -1,3 +1,5 @@
+import { sendData } from './api.js';
+
 const MAX_DESCRIPTION_LENGTH = 140;
 const MAX_NUMBER_OF_HASHTAGS = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -43,12 +45,10 @@ const isValidHashTags = (inputValue) => {
 };
 
 const onimgUploadFormSubmit = (evt) => {
+  evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
-    // Отправляем на сервер.
-  } else {
-    // Не отправляем на сервер.
-    evt.preventDefault();
+    sendData(evt);
   }
 };
 

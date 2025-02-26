@@ -86,4 +86,4 @@ function closeUploadForm() {
   hashTagsInput.removeEventListener('keydown', onInputInFocusKeyDown);
 }
 
-export { onImgUploadInputChange };
+export { onImgUploadInputChange, closeUploadForm, onEscKeyDown };

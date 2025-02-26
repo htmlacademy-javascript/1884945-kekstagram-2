@@ -49,7 +49,8 @@ const imgUploadEffectLevel = imgUploadForm.querySelector('.img-upload__effect-le
 const effectLevelInput = imgUploadEffectLevel.querySelector('.effect-level__value');
 const effectLevelSlider = imgUploadEffectLevel.querySelector('.effect-level__slider');
 const effectsList = imgUploadForm.querySelector('.effects__list');
-const defaultEffect = Effects[effectsList.querySelector('input[type="radio"]:checked').id];
+const defaultEffectInput = effectsList.querySelector('input[type="radio"]:checked');
+const defaultEffect = Effects[defaultEffectInput.id];
 
 let currentEffect = defaultEffect;
 
@@ -107,6 +108,7 @@ const addImgEffects = () => {
 
 const removeImgEffects = () => {
   currentEffect = defaultEffect;
+  defaultEffectInput.click();
   effectsList.removeEventListener('change', onEffectsListChange);
   effectLevelSlider.noUiSlider.destroy();
 };
