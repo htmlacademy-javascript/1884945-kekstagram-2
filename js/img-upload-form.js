@@ -1,9 +1,15 @@
 import { isEscapeKey } from './util.js';
-import { addPristine, destroyPristine } from './validation.js';
+import { pristine, addPristine, destroyPristine } from './validation.js';
 import { addScale, resetScale } from './img-scale.js';
 import { addImgEffects, removeImgEffects } from './img-effects.js';
+import { isSuccessMessageOpen, isErrorMessageOpen, showSuccessMessage, showErrorMessage, closeSuccessMessage, closeErrorMessage } from './messages.js';
+import { sendData } from './api.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикация...'
+};
 
 const imgUploadForm = document.querySelector('.img-upload__form');
 const imgUploadOverlay = imgUploadForm.querySelector('.img-upload__overlay');
@@ -13,21 +19,7 @@ const effectsPreviews = imgUploadForm.querySelectorAll('.effects__preview');
 const imgUploadCancel = imgUploadForm.querySelector('.img-upload__cancel');
 const descriptionInput = imgUploadForm.querySelector('.text__description');
 const hashTagsInput = imgUploadForm.querySelector('.text__hashtags');
-
-const onEscKeyDown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeUploadForm();
-  }
-};
-
-const onInputInFocusKeyDown = (evt) => {
-  evt.stopPropagation();
-};
-
-const onImgUploadCancelClick = () => {
-  closeUploadForm();
-};
+const submitButton = imgUploadForm.querySelector('.img-upload__submit');
 
 const onImgUploadPreviewLoad = () => {
   URL.revokeObjectURL(imgUploadPreview.src);
@@ -49,9 +41,61 @@ const renderPreview = () => {
   }
 };
 
+const onEscKeyDown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    if (isSuccessMessageOpen()) {
+      closeSuccessMessage();
+    } else if (isErrorMessageOpen()) {
+      closeErrorMessage();
+    } else {
+      closeUploadForm();
+    }
+  }
+};
+
+const onInputInFocusKeyDown = (evt) => {
+  evt.stopPropagation();
+};
+
+const onImgUploadCancelClick = () => {
+  closeUploadForm();
+};
+
 const onImgUploadInputChange = () => {
   renderPreview();
   openUploadForm();
+};
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const onSendDataSuccess = () => {
+  closeUploadForm();
+  showSuccessMessage();
+};
+const onSendDataError = () => {
+  showErrorMessage();
+};
+const onSendDataFinally = () => {
+  unblockSubmitButton();
+};
+
+const onimgUploadFormSubmit = (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+
+  if (isValid) {
+    sendData(evt, onSendDataSuccess, onSendDataError, onSendDataFinally);
+    blockSubmitButton();
+  }
 };
 
 // function declaration для поднятия и возможности использования в функциях выше.
@@ -59,7 +103,7 @@ const onImgUploadInputChange = () => {
 function openUploadForm() {
   imgUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  addPristine();
+  addPristine(imgUploadForm, onimgUploadFormSubmit);
   addScale();
   addImgEffects();
 
@@ -75,7 +119,7 @@ function closeUploadForm() {
   imgUploadInput.value = null;
   descriptionInput.value = '';
   hashTagsInput.value = '';
-  destroyPristine();
+  destroyPristine(imgUploadForm, onimgUploadFormSubmit);
   resetScale();
   removeImgEffects();
 

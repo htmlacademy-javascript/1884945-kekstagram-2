@@ -1,5 +1,3 @@
-import { sendData } from './api.js';
-
 const MAX_DESCRIPTION_LENGTH = 140;
 const MAX_NUMBER_OF_HASHTAGS = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -44,16 +42,8 @@ const isValidHashTags = (inputValue) => {
   return hashTags.every(isValidHashTag);
 };
 
-const onimgUploadFormSubmit = (evt) => {
-  evt.preventDefault();
-  const isValid = pristine.validate();
-  if (isValid) {
-    sendData(evt);
-  }
-};
-
-const addPristine = () => {
-  pristine = new Pristine(imgUploadForm, {
+const addPristine = (form, onFormSubmit) => {
+  pristine = new Pristine(form, {
     classTo: 'img-upload__field-wrapper',
     errorClass: 'img-upload__field-wrapper--error',
     errorTextParent: 'img-upload__field-wrapper',
@@ -83,12 +73,12 @@ const addPristine = () => {
     ValidationMessages.NOT_VALID_HASH_TAG
   );
 
-  imgUploadForm.addEventListener('submit', onimgUploadFormSubmit);
+  form.addEventListener('submit', onFormSubmit);
 };
 
-const destroyPristine = () => {
+const destroyPristine = (form, onFormSubmit) => {
   pristine.destroy();
-  imgUploadForm.removeEventListener('submit', onimgUploadFormSubmit);
+  form.removeEventListener('submit', onFormSubmit);
 };
 
-export {addPristine, destroyPristine};
+export {pristine, addPristine, destroyPristine};
