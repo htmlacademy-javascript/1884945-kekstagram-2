@@ -16,14 +16,6 @@ const commentsLoader = pictureCard.querySelector('.social__comments-loader');
 
 const isPicture = (evt) => evt.target.closest('.picture');
 
-const onPictureClick = (photoDescriptions, evt) => {
-  if (isPicture(evt)) {
-    evt.preventDefault();
-    renderPictureCard(evt, photoDescriptions);
-    openPictureCard();
-  }
-};
-
 const onPictureCardCloseButtonClick = () => {
   closePictureCard();
 };
@@ -32,6 +24,20 @@ const onEscKeyDown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closePictureCard();
+  }
+};
+
+const renderPortionOfComments = () => {
+  commentsLoader.classList.remove('hidden');
+  commentElements
+    .slice(renderedCommentsCounter, renderedCommentsCounter + COMMENTS_TO_SHOW_VALUE)
+    .forEach((commentElement) => {
+      socialComments.insertAdjacentHTML('beforeend', commentElement);
+      renderedCommentsCounter++;
+    });
+  shownCommentCount.textContent = renderedCommentsCounter;
+  if (renderedCommentsCounter >= commentElements.length) {
+    commentsLoader.classList.add('hidden');
   }
 };
 
@@ -50,23 +56,16 @@ const createCommentElements = ({comments}) => Array.from((comments), ({avatar, n
   </li>`
 );
 
-// function declaration для поднятия и возможности использования в функциях выше.
+const openPictureCard = () => {
+  pictureCard.classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
 
-function renderPortionOfComments () {
-  commentsLoader.classList.remove('hidden');
-  commentElements
-    .slice(renderedCommentsCounter, renderedCommentsCounter + COMMENTS_TO_SHOW_VALUE)
-    .forEach((commentElement) => {
-      socialComments.insertAdjacentHTML('beforeend', commentElement);
-      renderedCommentsCounter++;
-    });
-  shownCommentCount.textContent = renderedCommentsCounter;
-  if (renderedCommentsCounter >= commentElements.length) {
-    commentsLoader.classList.add('hidden');
-  }
-}
+  document.addEventListener('keydown', onEscKeyDown);
+  pictureCardCloseButton.addEventListener('click', onPictureCardCloseButtonClick);
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
+};
 
-function renderPictureCard (evt, photoDescriptions) {
+const renderPictureCard = (evt, photoDescriptions) => {
   const currentPicture = photoDescriptions.find((picture) => picture.id === Number(evt.target.closest('.picture').id));
 
   pictureCardImg.src = currentPicture.url;
@@ -79,16 +78,9 @@ function renderPictureCard (evt, photoDescriptions) {
   commentElements = createCommentElements(currentPicture);
 
   renderPortionOfComments();
-}
+};
 
-function openPictureCard() {
-  pictureCard.classList.remove('hidden');
-  document.querySelector('body').classList.add('modal-open');
-
-  document.addEventListener('keydown', onEscKeyDown);
-  pictureCardCloseButton.addEventListener('click', onPictureCardCloseButtonClick);
-  commentsLoader.addEventListener('click', onCommentsLoaderClick);
-}
+// function declaration для поднятия и возможности использования в функциях выше.
 
 function closePictureCard() {
   pictureCard.classList.add('hidden');
@@ -99,4 +91,4 @@ function closePictureCard() {
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
 }
 
-export {onPictureClick};
+export { isPicture, renderPictureCard, openPictureCard };

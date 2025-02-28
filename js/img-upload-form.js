@@ -93,7 +93,11 @@ const onimgUploadFormSubmit = (evt) => {
   const isValid = pristine.validate();
 
   if (isValid) {
-    sendData(evt, onSendDataSuccess, onSendDataError, onSendDataFinally);
+    sendData(evt)
+      .then(() => onSendDataSuccess())
+      .catch(() => onSendDataError())
+      .finally(() => onSendDataFinally());
+
     blockSubmitButton();
   }
 };
