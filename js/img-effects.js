@@ -108,7 +108,6 @@ const addImgEffects = () => {
 
 const removeImgEffects = () => {
   currentEffect = defaultEffect;
-  defaultEffectInput.click();
   effectsList.removeEventListener('change', onEffectsListChange);
   effectLevelSlider.noUiSlider.destroy();
 };

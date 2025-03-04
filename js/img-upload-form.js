@@ -42,16 +42,21 @@ const renderPreview = () => {
 };
 
 const onEscKeyDown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    if (isSuccessMessageOpen()) {
-      closeSuccessMessage();
-    } else if (isErrorMessageOpen()) {
-      closeErrorMessage();
-    } else {
-      closeUploadForm();
-    }
+  if (!isEscapeKey(evt)) {
+    return;
   }
+
+  evt.preventDefault();
+
+  if (isSuccessMessageOpen()) {
+    return closeSuccessMessage();
+  }
+
+  if (isErrorMessageOpen()) {
+    return closeErrorMessage();
+  }
+
+  closeUploadForm();
 };
 
 const onInputInFocusKeyDown = (evt) => {
@@ -77,26 +82,18 @@ const unblockSubmitButton = () => {
   submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-const onSendDataSuccess = () => {
-  closeUploadForm();
-  showSuccessMessage();
-};
-const onSendDataError = () => {
-  showErrorMessage();
-};
-const onSendDataFinally = () => {
-  unblockSubmitButton();
-};
-
 const onimgUploadFormSubmit = (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
 
   if (isValid) {
     sendData(evt)
-      .then(() => onSendDataSuccess())
-      .catch(() => onSendDataError())
-      .finally(() => onSendDataFinally());
+      .then(() => {
+        closeUploadForm();
+        showSuccessMessage();
+      })
+      .catch(() => showErrorMessage())
+      .finally(() => unblockSubmitButton());
 
     blockSubmitButton();
   }
@@ -120,12 +117,10 @@ function openUploadForm() {
 function closeUploadForm() {
   imgUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  imgUploadInput.value = null;
-  descriptionInput.value = '';
-  hashTagsInput.value = '';
-  destroyPristine(imgUploadForm, onimgUploadFormSubmit);
   resetScale();
   removeImgEffects();
+  imgUploadForm.reset();
+  destroyPristine(imgUploadForm, onimgUploadFormSubmit);
 
   imgUploadPreview.removeEventListener('load', onImgUploadPreviewLoad);
   imgUploadCancel.removeEventListener('click', onImgUploadCancelClick);
