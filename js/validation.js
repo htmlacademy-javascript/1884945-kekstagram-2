@@ -42,18 +42,8 @@ const isValidHashTags = (inputValue) => {
   return hashTags.every(isValidHashTag);
 };
 
-const onimgUploadFormSubmit = (evt) => {
-  const isValid = pristine.validate();
-  if (isValid) {
-    // Отправляем на сервер.
-  } else {
-    // Не отправляем на сервер.
-    evt.preventDefault();
-  }
-};
-
-const addPristine = () => {
-  pristine = new Pristine(imgUploadForm, {
+const addPristine = (form, onFormSubmit) => {
+  pristine = new Pristine(form, {
     classTo: 'img-upload__field-wrapper',
     errorClass: 'img-upload__field-wrapper--error',
     errorTextParent: 'img-upload__field-wrapper',
@@ -83,12 +73,12 @@ const addPristine = () => {
     ValidationMessages.NOT_VALID_HASH_TAG
   );
 
-  imgUploadForm.addEventListener('submit', onimgUploadFormSubmit);
+  form.addEventListener('submit', onFormSubmit);
 };
 
-const destroyPristine = () => {
+const destroyPristine = (form, onFormSubmit) => {
   pristine.destroy();
-  imgUploadForm.removeEventListener('submit', onimgUploadFormSubmit);
+  form.removeEventListener('submit', onFormSubmit);
 };
 
-export {addPristine, destroyPristine};
+export {pristine, addPristine, destroyPristine};
