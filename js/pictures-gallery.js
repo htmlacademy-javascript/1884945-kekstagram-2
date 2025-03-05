@@ -4,6 +4,7 @@ import { showDataError } from './messages.js';
 import { renderPictures } from './render-pictures.js';
 import { isPicture, renderPictureCard, openPictureCard } from './render-picture-card.js';
 import { onImgUploadInputChange } from './img-upload-form.js';
+import { initFilters } from './filters.js';
 
 const photoDescriptions = await getData()
   .catch(() => {
@@ -31,6 +32,8 @@ const initPicturesGallery = () => {
 
     renderPictures(photoDescriptions);
     pictures.addEventListener('click', onPictureClick);
+
+    initFilters(photoDescriptions);
   }
 };
 
