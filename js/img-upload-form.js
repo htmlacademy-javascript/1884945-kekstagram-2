@@ -87,6 +87,7 @@ const onimgUploadFormSubmit = (evt) => {
   const isValid = pristine.validate();
 
   if (isValid) {
+    blockSubmitButton();
     sendData(evt)
       .then(() => {
         closeUploadForm();
@@ -94,8 +95,6 @@ const onimgUploadFormSubmit = (evt) => {
       })
       .catch(() => showErrorMessage())
       .finally(() => unblockSubmitButton());
-
-    blockSubmitButton();
   }
 };
 

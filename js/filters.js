@@ -46,6 +46,7 @@ const clearGallery = () => {
   document.querySelectorAll('.picture').forEach((e) => e.remove());
 };
 
+const debouncedclearGallery = debounce(clearGallery, DEBOUNCE_DELAY);
 const debouncedRenderPictures = debounce(renderPictures, DEBOUNCE_DELAY);
 
 const initFilters = (photoDescriptions) => {
@@ -57,7 +58,7 @@ const initFilters = (photoDescriptions) => {
     if (evt.target.id !== activeButton.id) {
       selectActiveButton(evt);
       const sortedPhotoDescriptions = getSortedPhotoDescriptions(photoDescriptions);
-      clearGallery();
+      debouncedclearGallery();
       debouncedRenderPictures(sortedPhotoDescriptions);
     }
   };
