@@ -90,11 +90,11 @@ const onimgUploadFormSubmit = (evt) => {
     blockSubmitButton();
     sendData(evt)
       .then(() => {
+        unblockSubmitButton();
         closeUploadForm();
         showSuccessMessage();
       })
-      .catch(() => showErrorMessage())
-      .finally(() => unblockSubmitButton());
+      .catch(() => showErrorMessage());
   }
 };
 
@@ -128,4 +128,4 @@ function closeUploadForm() {
   hashTagsInput.removeEventListener('keydown', onInputInFocusKeyDown);
 }
 
-export { onImgUploadInputChange, closeUploadForm, onEscKeyDown };
+export { onImgUploadInputChange, closeUploadForm, onEscKeyDown, unblockSubmitButton };

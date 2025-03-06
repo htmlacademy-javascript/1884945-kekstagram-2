@@ -1,4 +1,4 @@
-import { onEscKeyDown } from './img-upload-form.js';
+import { onEscKeyDown, unblockSubmitButton } from './img-upload-form.js';
 
 const DATA_ERROR_SHOW_TIME = 5000;
 
@@ -67,6 +67,7 @@ function closeSuccessMessage () {
 }
 
 function closeErrorMessage () {
+  unblockSubmitButton();
   document.querySelector('.error').remove();
   document.removeEventListener('keydown', closeErrorMessage);
 }
