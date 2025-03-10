@@ -82,24 +82,27 @@ const onEffectsListChange = (evt) => {
 };
 
 const addImgEffects = () => {
-  noUiSlider.create(effectLevelSlider, {
-    range: {
-      min: defaultEffect.min,
-      max: defaultEffect.max,
-    },
-    start: defaultEffect.max,
-    step: defaultEffect.step,
-    connect: 'lower',
-    format: {
-      to: (value) => {
-        if (Number.isInteger(value)) {
-          return value.toFixed(0);
-        }
-        return value.toFixed(1);
+  if (!effectLevelSlider.classList.contains('noUi-target')) {
+    noUiSlider.create(effectLevelSlider, {
+      range: {
+        min: defaultEffect.min,
+        max: defaultEffect.max,
       },
-      from: (value) => parseFloat(value),
-    },
-  });
+      start: defaultEffect.max,
+      step: defaultEffect.step,
+      connect: 'lower',
+      format: {
+        to: (value) => {
+          if (Number.isInteger(value)) {
+            return value.toFixed(0);
+          }
+          return value.toFixed(1);
+        },
+        from: (value) => parseFloat(value),
+      },
+    });
+  }
+
 
   imgUploadEffectLevel.classList.add('visually-hidden');
   effectsList.addEventListener('change', onEffectsListChange);

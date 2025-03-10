@@ -24,4 +24,4 @@ const sendData = (evt) => {
   return load(Route.SEND_DATA, Method.POST, formData);
 };
 
-export {getData, sendData};
+export { getData, sendData };

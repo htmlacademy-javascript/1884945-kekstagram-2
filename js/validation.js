@@ -12,7 +12,7 @@ const imgUploadForm = document.querySelector('.img-upload__form');
 const descriptionInput = imgUploadForm.querySelector('.text__description');
 const hashTagsInput = imgUploadForm.querySelector('.text__hashtags');
 
-let pristine;
+let pristine; // Используется let для возможности инициализировать в одной функции (addPristine), а потом использовать в других (destroyPristine, makeValidation).
 
 const validateStringLength = (value) => value.length <= MAX_DESCRIPTION_LENGTH;
 
@@ -81,4 +81,6 @@ const destroyPristine = (form, onFormSubmit) => {
   form.removeEventListener('submit', onFormSubmit);
 };
 
-export {pristine, addPristine, destroyPristine};
+const validateImgUploadForm = () => pristine.validate();
+
+export { addPristine, destroyPristine, validateImgUploadForm };

@@ -4,19 +4,7 @@ import { showDataError } from './messages.js';
 import { renderPictures } from './render-pictures.js';
 import { isPicture, renderPictureCard, openPictureCard } from './render-picture-card.js';
 import { onImgUploadInputChange } from './img-upload-form.js';
-
-const photoDescriptions = await getData()
-  .catch(() => {
-    showDataError();
-  });
-
-const onPictureClick = (evt) => {
-  if (isPicture(evt)) {
-    evt.preventDefault();
-    renderPictureCard(evt, photoDescriptions);
-    openPictureCard();
-  }
-};
+import { initFilters } from './filters.js';
 
 const initImgUploadInput = () => {
   const imgUploadInput = document.querySelector('.img-upload__input');
@@ -24,13 +12,28 @@ const initImgUploadInput = () => {
   imgUploadInput.addEventListener('change', onImgUploadInputChange);
 };
 
-const initPicturesGallery = () => {
+const initPicturesGallery = async () => {
   initImgUploadInput();
-  if (photoDescriptions) {
-    const pictures = document.querySelector('.pictures');
+  try {
+    const photoDescriptions = await getData();
+    if (photoDescriptions) {
+      const onPictureClick = (evt) => {
+        if (isPicture(evt)) {
+          evt.preventDefault();
+          renderPictureCard(evt, photoDescriptions);
+          openPictureCard();
+        }
+      };
 
-    renderPictures(photoDescriptions);
-    pictures.addEventListener('click', onPictureClick);
+      const pictures = document.querySelector('.pictures');
+
+      renderPictures(photoDescriptions);
+      pictures.addEventListener('click', onPictureClick);
+
+      initFilters(photoDescriptions);
+    }
+  } catch {
+    showDataError();
   }
 };
 

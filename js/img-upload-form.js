@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import { pristine, addPristine, destroyPristine } from './validation.js';
+import { addPristine, destroyPristine, validateImgUploadForm } from './validation.js';
 import { addScale, resetScale } from './img-scale.js';
 import { addImgEffects, removeImgEffects } from './img-effects.js';
 import { isSuccessMessageOpen, isErrorMessageOpen, showSuccessMessage, showErrorMessage, closeSuccessMessage, closeErrorMessage } from './messages.js';
@@ -84,18 +84,17 @@ const unblockSubmitButton = () => {
 
 const onimgUploadFormSubmit = (evt) => {
   evt.preventDefault();
-  const isValid = pristine.validate();
+  const isValid = validateImgUploadForm();
 
   if (isValid) {
+    blockSubmitButton();
     sendData(evt)
       .then(() => {
+        unblockSubmitButton();
         closeUploadForm();
         showSuccessMessage();
       })
-      .catch(() => showErrorMessage())
-      .finally(() => unblockSubmitButton());
-
-    blockSubmitButton();
+      .catch(() => showErrorMessage());
   }
 };
 
@@ -129,4 +128,4 @@ function closeUploadForm() {
   hashTagsInput.removeEventListener('keydown', onInputInFocusKeyDown);
 }
 
-export { onImgUploadInputChange, closeUploadForm, onEscKeyDown };
+export { onImgUploadInputChange, closeUploadForm, onEscKeyDown, unblockSubmitButton };
