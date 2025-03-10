@@ -5,7 +5,7 @@ const Filters = {
   RANDOM: 'filter-random',
   DISCUSSED: 'filter-discussed',
 };
-const DEBOUNCE_DELAY = 500;
+
 const RANDOM_PHOTO_DESCRIPTIONS_COUNT = 10;
 
 const imgFilters = document.querySelector('.img-filters');
@@ -43,11 +43,11 @@ const getSortedPhotoDescriptions = (photoDescriptions) => {
 };
 
 const clearGallery = () => {
-  document.querySelectorAll('.picture').forEach((e) => e.remove());
+  document.querySelectorAll('.picture').forEach((picture) => picture.remove());
 };
 
-const debouncedclearGallery = debounce(clearGallery, DEBOUNCE_DELAY);
-const debouncedRenderPictures = debounce(renderPictures, DEBOUNCE_DELAY);
+const debouncedclearGallery = debounce(clearGallery);
+const debouncedRenderPictures = debounce(renderPictures);
 
 const initFilters = (photoDescriptions) => {
   const onImgFiltersButtonClick = (evt) => {
@@ -67,4 +67,4 @@ const initFilters = (photoDescriptions) => {
   imgFiltersForm.addEventListener('click', onImgFiltersButtonClick);
 };
 
-export {initFilters};
+export { initFilters };

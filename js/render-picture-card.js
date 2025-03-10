@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import { isEscapeKey } from './util.js';
 
 const COMMENTS_TO_SHOW_VALUE = 5;
 let renderedCommentsCounter = 0;

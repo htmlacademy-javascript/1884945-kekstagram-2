@@ -1,6 +1,12 @@
 import { onEscKeyDown, unblockSubmitButton } from './img-upload-form.js';
 
 const DATA_ERROR_SHOW_TIME = 5000;
+const MessageClasses = {
+  SUCCESS: 'success',
+  SUCCESS_BUTTON: 'success__button',
+  ERROR: 'error',
+  ERROR_BUTTON: 'error__button',
+};
 
 const successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 const successMessageElement = successMessageTemplate.cloneNode(true);
@@ -17,32 +23,32 @@ const showDataError = () => {
   }, DATA_ERROR_SHOW_TIME);
 };
 
-const isNotSuccessMessage = (evt) =>
-  evt.target.className === 'success';
+const isSuccessMessageOverlay = (evt) =>
+  evt.target.className === MessageClasses.SUCCESS;
 
 const isSuccessMessageButton = (evt) =>
-  evt.target.className === 'success__button';
+  evt.target.className === MessageClasses.SUCCESS_BUTTON;
 
 const isSuccessMessageOpen = () =>
-  document.querySelector('.success');
+  document.querySelector(`.${MessageClasses.SUCCESS}`);
 
-const isNotErrorMessage = (evt) =>
-  evt.target.className === 'error';
+const isErrorMessageOverlay = (evt) =>
+  evt.target.className === MessageClasses.ERROR;
 
 const isErrorMessageButton = (evt) =>
-  evt.target.className === 'error__button';
+  evt.target.className === MessageClasses.ERROR_BUTTON;
 
 const isErrorMessageOpen = () =>
-  document.querySelector('.error');
+  document.querySelector(`.${MessageClasses.ERROR}`);
 
 const onSuccessMessageClick = (evt) => {
-  if (isNotSuccessMessage(evt) || isSuccessMessageButton(evt)) {
+  if (isSuccessMessageOverlay(evt) || isSuccessMessageButton(evt)) {
     closeSuccessMessage();
   }
 };
 
 const onErrorMessageClick = (evt) => {
-  if (isNotErrorMessage(evt) || isErrorMessageButton(evt)) {
+  if (isErrorMessageOverlay(evt) || isErrorMessageButton(evt)) {
     closeErrorMessage();
   }
 };
@@ -61,14 +67,14 @@ const showErrorMessage = () => {
 // function declaration для поднятия и возможности использования в функциях выше.
 
 function closeSuccessMessage () {
-  document.querySelector('.success').remove();
+  document.querySelector(`.${MessageClasses.SUCCESS}`).remove();
   successMessageElement.removeEventListener('click', onSuccessMessageClick);
   document.removeEventListener('keydown', onEscKeyDown);
 }
 
 function closeErrorMessage () {
   unblockSubmitButton();
-  document.querySelector('.error').remove();
+  document.querySelector(`.${MessageClasses.ERROR}`).remove();
   document.removeEventListener('keydown', closeErrorMessage);
 }
 

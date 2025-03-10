@@ -1,4 +1,5 @@
 const ESC_KEY = 'Escape';
+const DEBOUNCE_DELAY = 500;
 
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
@@ -23,7 +24,7 @@ const shuffleArray = (array) => {
 
 const isEscapeKey = (evt) => evt.key === ESC_KEY;
 
-const debounce = (callback, timeoutDelay = 500) => {
+const debounce = (callback, timeoutDelay = DEBOUNCE_DELAY) => {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;
