@@ -36,6 +36,7 @@ const renderPreview = () => {
     effectsPreviews.forEach(
       (element) => (element.style.backgroundImage = `url(${previewUrl})`)
     );
+
     // Удаляет object URL.
     imgUploadPreview.addEventListener('load', onImgUploadPreviewLoad);
   }
