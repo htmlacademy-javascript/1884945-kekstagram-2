@@ -14,12 +14,12 @@ const makeCounter = (counterInitialValue = 1) => {
   return () => currentCount++;
 };
 
-const shuffleArray = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
+const shuffleArray = (elements) => {
+  for (let i = elements.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1)); // случайный индекс от 0 до i
-    [array[i], array[j]] = [array[j], array[i]];
+    [elements[i], elements[j]] = [elements[j], elements[i]];
   }
-  return array;
+  return elements;
 };
 
 const isEscapeKey = (evt) => evt.key === ESC_KEY;

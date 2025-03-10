@@ -24,12 +24,12 @@ const selectActiveButton = (evt) => {
 const compareByNumberOfComments = (commentA, commentB) =>
   commentB['comments'].length - commentA['comments'].length;
 
-const sortByDefault = (array) => array;
+const sortByDefault = (photoDescriptions) => photoDescriptions;
 
-const sortByComments = (array) => array.slice().sort(compareByNumberOfComments);
+const sortByComments = (photoDescriptions) => photoDescriptions.slice().sort(compareByNumberOfComments);
 
-const sortRandomly = (array) =>
-  shuffleArray(array.slice()).slice(-RANDOM_PHOTO_DESCRIPTIONS_COUNT);
+const sortRandomly = (photoDescriptions) =>
+  shuffleArray(photoDescriptions.slice()).slice(-RANDOM_PHOTO_DESCRIPTIONS_COUNT);
 
 const getSortedPhotoDescriptions = (photoDescriptions) => {
   switch (activeButton.id) {
