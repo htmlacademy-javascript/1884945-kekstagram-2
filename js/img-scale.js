@@ -15,7 +15,7 @@ const scaleImg = (value) => {
   scaleControlInput.value = `${value}%`;
 };
 
-const reduceScale = () => {
+const onScaleControlSmallerClick = () => {
   const currentValue = parseInt(scaleControlInput.value, 10);
   let newValue = currentValue - ScaleValues.STEP;
   if (newValue < ScaleValues.MIN) {
@@ -24,7 +24,7 @@ const reduceScale = () => {
   scaleImg(newValue);
 };
 
-const increaseScale = () => {
+const onScaleControlBiggerClick = () => {
   const currentValue = parseInt(scaleControlInput.value, 10);
   let newValue = currentValue + ScaleValues.STEP;
   if (newValue > ScaleValues.MAX) {
@@ -34,14 +34,14 @@ const increaseScale = () => {
 };
 
 const addScale = () => {
-  scaleControlSmaller.addEventListener('click', reduceScale);
-  scaleControlBigger.addEventListener('click', increaseScale);
+  scaleControlSmaller.addEventListener('click', onScaleControlSmallerClick);
+  scaleControlBigger.addEventListener('click', onScaleControlBiggerClick);
 };
 
 const resetScale = () => {
   scaleImg(parseInt(scaleControlInput.getAttribute('value'), 10));
-  scaleControlSmaller.removeEventListener('click', reduceScale);
-  scaleControlBigger.removeEventListener('click', increaseScale);
+  scaleControlSmaller.removeEventListener('click', onScaleControlSmallerClick);
+  scaleControlBigger.removeEventListener('click', onScaleControlBiggerClick);
 };
 
 export { addScale, resetScale };
